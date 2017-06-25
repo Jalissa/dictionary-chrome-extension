@@ -17,7 +17,6 @@ document.getElementsByTagName('body')[0].addEventListener('dblclick', function(e
             console.log(data);
         });
     }
-    
 });
 
 
