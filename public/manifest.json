@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Dictionary",
+  "version": "1",
+  "description": "Dictionary Chrome extension",
+  "browser_action": {
+    "default_title": "Dictionary"
+  },
+  "author": "Jalissa Trinidad",
+  "permissions": [
+    "activeTab"
+  ],
+  "background": {
+    "scripts": ["events.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["main.js"],
+      "css": ["main.css"]
+    }
+  ]
+}
