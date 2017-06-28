@@ -18,17 +18,18 @@ document.getElementsByTagName('body')[0].addEventListener('dblclick', function(e
     if(wordSelected){
         const headers = new Headers({
             "Accept": "application/json",
+            "X-Mashape-Key": ""
         });
         fetch(`https://wordsapiv1.p.mashape.com/words/${wordSelected.toLowerCase()}`, { headers })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
-            console.log(evt);
             if(data.results){
-                container.style.padding = '5px';
-                container.style.top = `${evt.clientY + 10}px`;
-                container.style.left = `${evt.clientX - (evt.offsetX/4)}px`;
                 
+                const position = getElementPosition(window.getSelection());
+
+                container.style.padding = '5px';                
+                container.style.top = `${position.top + position.height}px`;
+                container.style.left = `${position.left - Math.abs(container.style.maxWidth - position.width)}px`;
                 render(<App word={wordSelected} wordInfo={data || {}} />, container);
             }
         }, () => {
@@ -45,4 +46,23 @@ const unmountComponent = (evt) => {
 document.querySelectorAll(`body:not(#${elementId})`)[0].addEventListener('click', unmountComponent);
 window.addEventListener('scroll', unmountComponent);
 
+const getElementPosition = (sel) => {
+    let range;
+    if (sel.getRangeAt) {
+        range = sel.getRangeAt(0).cloneRange();
+    } else {
+        // Older WebKit doesn't have getRangeAt
+        range = document.createRange();
+        range.setStart(sel.anchorNode, sel.anchorOffset);
+        range.setEnd(sel.focusNode, sel.focusOffset);
 
+        if (range.collapsed !== sel.isCollapsed) {
+            range.setStart(sel.focusNode, sel.focusOffset);
+            range.setEnd(sel.anchorNode, sel.anchorOffset);
+        }
+    }
+
+    range.collapse(false);
+
+    return range.getBoundingClientRect();
+}
