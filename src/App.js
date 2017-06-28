@@ -4,8 +4,11 @@ class App extends Component {
 
   render() {
     const results = this.props.wordInfo.results.slice(0,1);
+    const syllables = this.props.wordInfo.syllables;
+    const pronunciation = this.props.wordInfo.pronunciation;
+    
     const info = results.map((result, index) => {
-
+    
       const attributes = attrs.map( attr => {
         const value = result[attr.name];
         return (
@@ -23,9 +26,10 @@ class App extends Component {
       return (
         <div key={index}>
           <span>
+            <span>
               {result.partOfSpeech ? `.${result.partOfSpeech}.` : '' }
-              {this.props.wordInfo.pronunciation ? 
-                this.props.wordInfo.pronunciation[result.partOfSpeech] : ''}
+              {pronunciation ? pronunciation[result.partOfSpeech] : ''}
+            </span>
             <span>
               {result.definition} 
             </span>
@@ -37,8 +41,8 @@ class App extends Component {
 
     return (
       <div>
-        <div>{this.props.word} <span>{this.props.wordInfo.pronunciation ? `| ${this.props.wordInfo.pronunciation.all} |` : '' }</span></div>
-        <div>{this.props.wordInfo.syllables.count > 1 ? ` syl. ${this.props.wordInfo.syllables.list.join('.')}` : ''}</div>
+        <div><span>{this.props.word} </span> <span>{pronunciation ? pronunciation.all ? `| ${pronunciation.all} |` : `| ${pronunciation} |` : '' }</span></div>
+        <div>{syllables ? syllables.count > 1 ? ` syl. ${this.props.wordInfo.syllables.list.join('.')}` : '' : ''}</div>
         {info}
       </div>
     );

@@ -11,32 +11,38 @@ id.value = elementId;
 div.setAttributeNode(id);
 document.getElementsByTagName('html')[0].appendChild(div);
 
+const container = document.getElementById(elementId);
+
 document.getElementsByTagName('body')[0].addEventListener('dblclick', function(evt){
     const wordSelected = window.getSelection().toString().trim();
     if(wordSelected){
         const headers = new Headers({
             "Accept": "application/json",
-            "X-Mashape-Key": "SECRET_KEY",
         });
-        fetch(`https://wordsapiv1.p.mashape.com/words/${wordSelected}`, { headers })
+        fetch(`https://wordsapiv1.p.mashape.com/words/${wordSelected.toLowerCase()}`, { headers })
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
-            console.log(data.results.slice(0,1));
-            document.getElementById(elementId).style.padding = '5px';
-            render(<App word={wordSelected} wordInfo={data || {}} />, 
-                document.getElementById(elementId));
+            console.log(evt);
+            if(data.results){
+                container.style.padding = '5px';
+                container.style.top = `${evt.clientY + 10}px`;
+                container.style.left = `${evt.clientX - (evt.offsetX/4)}px`;
+                
+                render(<App word={wordSelected} wordInfo={data || {}} />, container);
+            }
         }, () => {
-            document.getElementById(elementId).style.padding = '0px';
+            container.style.padding = '0px';
         });
     }
 });
 
-document.querySelectorAll(`body:not(#${elementId})`)[0].addEventListener('click', 
-    function(evt){
-        document.getElementById(elementId).style.padding = '0px';    
-        unmountComponentAtNode(document.getElementById(elementId));
-    }
-);
+const unmountComponent = (evt) => {
+    container.style.padding = '0px';    
+    unmountComponentAtNode(container);
+}
+
+document.querySelectorAll(`body:not(#${elementId})`)[0].addEventListener('click', unmountComponent);
+window.addEventListener('scroll', unmountComponent);
 
 
