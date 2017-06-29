@@ -25,13 +25,13 @@ document.getElementsByTagName('body')[0].addEventListener('dblclick', function(e
         .then((data) => {
             if(data.results){
                 const position = getElementPosition(window.getSelection());
-                
-                container.style.padding = '5px';                
-                container.style.top = `${position.top + position.height}px`;
-
                 const maxWidth = parseInt(window.getComputedStyle(container).getPropertyValue('max-width'));
+                const top = position.top + position.height;
+                const left = position.left - Math.abs(maxWidth/2 - position.width);
                 
-                container.style.left = `${position.left - Math.abs(maxWidth/2 - position.width)}px`;
+                container.style.padding = '5px';                                
+                container.style.top = `${top < 0 ? 0 : top}px`;
+                container.style.left = `${left < 0 ? 0 : left}px`;
 
                 render(<App 
                         word={wordSelected} 
