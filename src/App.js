@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import attrs from './attrs';
 
 const App = (props) => {
-  const results = props.wordInfo.results.slice(0, props.definitionLimit);
+  const results = props.wordInfo.results ? props.wordInfo.results.slice(0, props.definitionLimit) : [];
   const syllables = props.wordInfo.syllables;
   const pronunciation = props.wordInfo.pronunciation;
     
@@ -43,9 +43,10 @@ const App = (props) => {
       <div>
         <div><span className="bold">{props.word} </span> <span className="reduced-font italic">{pronunciation ? pronunciation.all ? `| ${pronunciation.all} |` : `| ${pronunciation} |` : '' }</span></div>
         <div className="main-space color italic reduced-font">{syllables ? syllables.count > 1 ? ` syl. ${props.wordInfo.syllables.list.join('-')}` : '' : ''}</div>
-        {info}
+        
+        { results.length > 0 ? info : <span>No definitions found </span>}
       </div>
-    );
+    );  
 }
 
 export default App;

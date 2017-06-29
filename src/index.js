@@ -23,31 +23,30 @@ document.getElementsByTagName('body')[0].addEventListener('dblclick', function(e
         fetch(`https://wordsapiv1.p.mashape.com/words/${wordSelected.toLowerCase()}`, { headers })
         .then((response) => response.json())
         .then((data) => {
-            if(data.results){
-                const position = getElementPosition(window.getSelection());
-                const maxWidth = parseInt(window.getComputedStyle(container).getPropertyValue('max-width'));
-                const top = position.top + position.height;
-                const left = position.left - Math.abs(maxWidth/2 - position.width);
-                
-                container.style.padding = '5px';                                
-                container.style.top = `${top < 0 ? 0 : top}px`;
-                container.style.left = `${left < 0 ? 0 : left}px`;
+            const position = getElementPosition(window.getSelection());
+            const maxWidth = parseInt(window.getComputedStyle(container).getPropertyValue('max-width'));
+            const top = position.top + position.height;
+            const left = position.left - Math.abs(maxWidth/2 - position.width);
+            
+            container.style.display = 'initial';                                
+            container.style.top = `${top < 0 ? 0 : top}px`;
+            container.style.left = `${left < 0 ? 0 : left}px`;
 
-                render(<App 
-                        word={wordSelected} 
-                        wordInfo={data}  
-                        attrLimit={process.env.REACT_APP_ATTR_LIMIT} 
-                        definitionLimit={process.env.REACT_APP_DEF_LIMIT}/>
-                    , container);
-            }
+            render(<App 
+                    word={wordSelected} 
+                    wordInfo={data}  
+                    attrLimit={process.env.REACT_APP_ATTR_LIMIT} 
+                    definitionLimit={process.env.REACT_APP_DEF_LIMIT}/>
+                , container);
+            
         }, () => {
-            container.style.padding = '0px';
+            container.style.display = 'hidden';  
         });
     }
 });
 
 const unmountComponent = (evt) => {
-    container.style.padding = '0px';    
+    container.style.display = 'none';
     unmountComponentAtNode(container);
 }
 
