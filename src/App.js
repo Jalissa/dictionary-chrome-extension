@@ -16,7 +16,7 @@ const App = (props) => {
               { value ? `${attr.code} ` : ''} 
             </span>
             <span className="italic reduced-font">
-              {value ? value.slice(0, props.attrLimit).join(', ') : ''}
+              {value ? value.slice(0, props.attrLimit).join(attr.separator) : ''}
             </span> 
           </div>
         );

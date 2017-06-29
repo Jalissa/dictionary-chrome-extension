@@ -1,14 +1,17 @@
 export default [
     {
         code: 'syn.',
-        name: 'synonyms'
+        name: 'synonyms',
+        separator: ', '
     },
     {
         code: 'ant.',
-        name: 'antonyms'
+        name: 'antonyms',
+        separator: ', '
     },
     {
         code: 'e.g.',
-        name: 'examples'
+        name: 'examples',
+        separator: '; '
     }
 ]
