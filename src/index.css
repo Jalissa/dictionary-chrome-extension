@@ -5,8 +5,46 @@
     z-index: 5000000;
     background: rgba(0, 0, 0, 0.7);
     color: #fff;
-    border-radius: 4px;
+    border-radius: 5px;
     max-width: 300px;
+    font-size: 13px;
+    font-family: 'Futura','Verdana', sans-serif;
+    max-height: 400px;
+    overflow: scroll;
 }
 
+#__793589eb_dictionary-container .italic{
+    font-style: italic;
+}
 
+#__793589eb_dictionary-container .color{
+    color: darkgrey;
+}
+
+#__793589eb_dictionary-container .bold{
+    font-weight: bold;
+}
+
+#__793589eb_dictionary-container .reduced-font{
+    font-size: 11px;
+}
+
+#__793589eb_dictionary-container .main-space{
+    padding-bottom: 5px;
+    border-bottom: 1px solid darkgrey;
+}
+
+#__793589eb_dictionary-container .separation-definition{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-bottom: 1px dotted darkgrey;
+}
+
+#__793589eb_dictionary-container .separation-attrs{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#__793589eb_dictionary-container .indentation{
+    margin-left: 15px;
+}

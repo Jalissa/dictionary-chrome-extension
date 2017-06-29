@@ -18,19 +18,27 @@ document.getElementsByTagName('body')[0].addEventListener('dblclick', function(e
     if(wordSelected){
         const headers = new Headers({
             "Accept": "application/json",
-            "X-Mashape-Key": ""
+            "X-Mashape-Key": process.env.REACT_APP_KEY
         });
         fetch(`https://wordsapiv1.p.mashape.com/words/${wordSelected.toLowerCase()}`, { headers })
         .then((response) => response.json())
         .then((data) => {
             if(data.results){
-                
                 const position = getElementPosition(window.getSelection());
-
+                
                 container.style.padding = '5px';                
                 container.style.top = `${position.top + position.height}px`;
-                container.style.left = `${position.left - Math.abs(container.style.maxWidth - position.width)}px`;
-                render(<App word={wordSelected} wordInfo={data || {}} />, container);
+
+                const maxWidth = parseInt(window.getComputedStyle(container).getPropertyValue('max-width'));
+                
+                container.style.left = `${position.left - Math.abs(maxWidth/2 - position.width)}px`;
+
+                render(<App 
+                        word={wordSelected} 
+                        wordInfo={data}  
+                        attrLimit={process.env.REACT_APP_ATTR_LIMIT} 
+                        definitionLimit={process.env.REACT_APP_DEF_LIMIT}/>
+                    , container);
             }
         }, () => {
             container.style.padding = '0px';

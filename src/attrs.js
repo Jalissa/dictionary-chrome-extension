@@ -8,7 +8,7 @@ export default [
         name: 'antonyms'
     },
     {
-        code: 'eg.',
+        code: 'e.g.',
         name: 'examples'
     }
 ]
